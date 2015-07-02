@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> 小球中立加速度实验 </title>  
+  <meta http-equiv="Content-Type" content="text/html; charset=gbk"/>   
+ </head> 
+ <body> 
+	 <canvas id="canvas" width="2024" height="768" style="border: 1px solid #aaa;display:block;"></canvas>
+	 <script type="text/javascript">
+        var ball = {x:512, y:100, r:20, g:2, vx:-4, vy:-10,color:"#005588" };
+        //g加速度  vx x方向上的速度  与y方向上的速度
+        window.onload =  function () {
+        	var canvas = document.getElementById("canvas");
+        	canvas.width = 1024;
+        	canvas.height = 768;
+
+        	var context = canvas.getContext("2d");
+        	 setInterval(function () {
+        	 	render(context);
+        	 	update();
+        	 }, 50);
+        }
+        function update(){
+        	ball.x += ball.vx;
+        	ball.y += ball.vy;
+        	ball.vy += ball.g;
+        	//碰撞检测
+        	if( ball.y >= 768 -ball.r){
+        		ball.y = 768 - ball.r;
+        		ball.vy = -0.75*ball.vy;
+        	}
+        }
+        function render (cxt) {
+        	cxt.clearRect(0,0,cxt.canvas.width,cxt.canvas.height);
+        	cxt.fillStyle = ball.color;
+        	cxt.beginPath();
+        	cxt.arc(ball.x,ball.y,ball.r,0,2*Math.PI);
+        	cxt.closePath();
+        	cxt.fill();
+        }
+	 </script>
+ </body>
+</html>
